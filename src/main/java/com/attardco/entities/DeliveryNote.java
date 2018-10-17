@@ -1,5 +1,6 @@
 package com.attardco.entities;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ public class DeliveryNote {
 	private String ItemDescription;
 	private long qtyOrd;
 	private String Status;
+	private Timestamp PrintDate;
 
 	public long getDelNoteRef() {
 		return DelNoteRef;
@@ -195,6 +197,12 @@ public class DeliveryNote {
 	}
 	public void setStatus(String status) {
 		Status = status;
+	}
+	public Timestamp getPrintDate() {
+		return PrintDate;
+	}
+	public void setPrintDate(Timestamp printDate) {
+		PrintDate = printDate;
 	}
 	
 	

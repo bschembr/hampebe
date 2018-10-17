@@ -37,7 +37,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins="http://localhost:4200", allowedHeaders="*")
-public class DeliveryOrderController {
+public class OrderAndNotesController {
 	
 	@PersistenceContext
     private EntityManager entityManager;
