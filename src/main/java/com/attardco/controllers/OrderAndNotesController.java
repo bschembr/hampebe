@@ -27,8 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.attardco.entities.DeliveryNote;
 import com.attardco.entities.DeliveryOrder;
+import com.attardco.entities.ItemsView;
 import com.attardco.repositories.DeliveryNoteRepository;
 import com.attardco.repositories.DeliveryOrderRepository;
+import com.attardco.repositories.ItemsViewRepository;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -117,5 +119,17 @@ public class OrderAndNotesController {
         
 	}	
 
+	// ---------------------------------------------
+	// OPERATIONS FOR ITEMSVIEW
+	// ---------------------------------------------
 
+	@Autowired
+	private ItemsViewRepository itemsViewRepository;
+
+	
+	@GetMapping("/items")
+	public List<ItemsView> getItemsView() {
+		return itemsViewRepository.findAll();
+	}
+	
 }
