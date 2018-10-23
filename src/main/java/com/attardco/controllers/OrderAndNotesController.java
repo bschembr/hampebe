@@ -122,14 +122,14 @@ public class OrderAndNotesController {
 	// ---------------------------------------------
 	// OPERATIONS FOR ITEMSVIEW
 	// ---------------------------------------------
-
+	
 	@Autowired
 	private ItemsViewRepository itemsViewRepository;
 
-	
+	// @SuppressWarnings("unchecked")
 	@GetMapping("/items")
-	public List<ItemsView> getItemsView() {
-		return itemsViewRepository.findAll();
+	public List<ItemsView> getItemsView() { 
+		return itemsViewRepository.findHampersItems();
 	}
 	
 }
