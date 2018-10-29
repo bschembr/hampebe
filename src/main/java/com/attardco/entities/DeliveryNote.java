@@ -45,12 +45,18 @@ public class DeliveryNote {
 	private String ReceiverAddr4;
 	private String ReceiverTown;
 	private String ReceiverPhone;
-	private String DeliveryInstructions;
+	private String CustomHamperRemarks;
+	private Boolean ReqCalendar;
+	private Boolean ReqDiary;
+	private Boolean ReqCard;
+	private String ReqOther;
 	private String ItemCode;
 	private String ItemDescription;
 	private long qtyOrd;
 	private String Status;
-	private Timestamp PrintDate;
+	private LocalDate DelNotePrintDate;
+	private LocalDate LabelPrintDate;
+	private Boolean Locked;
 
 	public long getDelNoteRef() {
 		return DelNoteRef;
@@ -168,11 +174,35 @@ public class DeliveryNote {
 	public void setReceiverPhone(String receiverPhone) {
 		ReceiverPhone = receiverPhone;
 	}
-	public String getDeliveryInstructions() {
-		return DeliveryInstructions;
+	public String getCustomHamperRemarks() {
+		return CustomHamperRemarks;
 	}
-	public void setDeliveryInstructions(String deliveryInstructions) {
-		DeliveryInstructions = deliveryInstructions;
+	public void setCustomHamperRemarks(String customHamperRemarks) {
+		CustomHamperRemarks = customHamperRemarks;
+	}	
+	public Boolean getReqCalendar() {
+		return ReqCalendar;
+	}
+	public void setReqCalendar(Boolean reqCalendar) {
+		ReqCalendar = reqCalendar;
+	}
+	public Boolean getReqDiary() {
+		return ReqDiary;
+	}
+	public void setReqDiary(Boolean reqDiary) {
+		ReqDiary = reqDiary;
+	}
+	public Boolean getReqCard() {
+		return ReqCard;
+	}
+	public void setReqCard(Boolean reqCard) {
+		ReqCard = reqCard;
+	}
+	public String getReqOther() {
+		return ReqOther;
+	}
+	public void setReqOther(String reqOther) {
+		ReqOther = reqOther;
 	}
 	public String getItemCode() {
 		return ItemCode;
@@ -198,12 +228,23 @@ public class DeliveryNote {
 	public void setStatus(String status) {
 		Status = status;
 	}
-	public Timestamp getPrintDate() {
-		return PrintDate;
+	public LocalDate getDelNotePrintDate() {
+		return DelNotePrintDate;
 	}
-	public void setPrintDate(Timestamp printDate) {
-		PrintDate = printDate;
+	public void setDelNotePrintDate(LocalDate delNotePrintDate) {
+		DelNotePrintDate = delNotePrintDate;
 	}
-	
+	public LocalDate getLabelPrintDate() {
+		return LabelPrintDate;
+	}
+	public void setLabelPrintDate(LocalDate labelPrintDate) {
+		LabelPrintDate = labelPrintDate;
+	}
+	public Boolean getLocked() {
+		return Locked;
+	}
+	public void setLocked(Boolean locked) {
+		Locked = locked;
+	}	
 	
 }

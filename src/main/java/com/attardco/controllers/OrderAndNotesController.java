@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SuppressWarnings("deprecation")
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins="http://localhost:4200", allowedHeaders="*")
+@CrossOrigin(origins= { "http://localhost:4200", "http://acots" }, allowedHeaders="*")
 public class OrderAndNotesController {
 	
 	@PersistenceContext
