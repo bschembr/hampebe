@@ -25,9 +25,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.attardco.entities.ClientsView;
 import com.attardco.entities.DeliveryNote;
 import com.attardco.entities.DeliveryOrder;
 import com.attardco.entities.ItemsView;
+import com.attardco.repositories.ClientsViewRepository;
 import com.attardco.repositories.DeliveryNoteRepository;
 import com.attardco.repositories.DeliveryOrderRepository;
 import com.attardco.repositories.ItemsViewRepository;
@@ -85,18 +87,11 @@ public class OrderAndNotesController {
 		return deliveryNoteRepository.findAll();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@GetMapping("/delorder/{id}/delnotes")
-	public List<DeliveryNote> getOrderDelNotes(@PathVariable Long id) {
-		Session session = entityManager.unwrap(Session.class);
-		@SuppressWarnings("rawtypes")
-		SQLQuery sqlQuery = session.createNativeQuery("SELECT delnotes.*\r\n" + 
-				"FROM [dbo].[DeliveryNote] delnotes\r\n" + 
-				"inner join [dbo].[DeliveryOrder] delorders on delorders.DelOrdRef = Delnotes.delOrderRef_id\r\n" + 
-				"where Delnotes.delOrderRef_id =  " + id);
-		return sqlQuery.list();
+	public List<DeliveryNote> getDelNotesForOrder(@PathVariable Long id) {
+		return deliveryNoteRepository.findDelNotesForOrder(id);
 	}
-
+	
 	@GetMapping("/delnote/{id}")
 	public DeliveryNote getDelNote(@PathVariable Long id) {
 		return deliveryNoteRepository.findById(id).get();
@@ -132,4 +127,18 @@ public class OrderAndNotesController {
 		return itemsViewRepository.findHampersItems();
 	}
 	
+
+	// ---------------------------------------------
+	// OPERATIONS FOR CLIENTSVIEW
+	// ---------------------------------------------
+	
+	@Autowired
+	private ClientsViewRepository clientViewRepository;
+
+	// @SuppressWarnings("unchecked")
+	@GetMapping("/clients")
+	public List<ClientsView> getClientsView() { 
+		return clientViewRepository.listClients();
+	}
+
 }

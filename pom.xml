@@ -53,7 +53,8 @@
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
-			</dependency>
+		</dependency>
+
 
 	</dependencies>
 
@@ -91,5 +92,6 @@
 
 		</plugins>
 	</build>
+	
 
 </project>
