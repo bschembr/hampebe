@@ -18,6 +18,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -108,12 +109,26 @@ public class OrderAndNotesController {
 		return deliveryNoteRepository.save(deliveryNote);
 	}
 
+
 	@PostMapping("/delnote")
 	public DeliveryNote createDelNote(@RequestBody DeliveryNote deliveryNote) {
 		return deliveryNoteRepository.save(deliveryNote);
         
-	}	
+	}
 
+	@PutMapping("/lockdelnote/{id}")
+	public Boolean lockDelNote(@PathVariable Long id) {
+		deliveryNoteRepository.lockDelNote(id);
+		return true;
+	}
+
+	@PutMapping("/unlockdelnote/{id}")
+	public Boolean unlockDelNote(@PathVariable Long id) {
+		deliveryNoteRepository.unlockDelNote(id);
+		return true;
+	}
+	
+	
 	// ---------------------------------------------
 	// OPERATIONS FOR ITEMSVIEW
 	// ---------------------------------------------
