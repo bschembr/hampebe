@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,7 +21,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "DeliveryOrder")
 public class DeliveryOrder {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="orders_seq")
+	@SequenceGenerator(
+	    name="orders_seq",
+	    sequenceName="orders_sequence",
+	    initialValue=78000000
+	)
 	@Column(name="DelOrdRef")
 	private long DelOrdRef;	
 	@JsonIgnore

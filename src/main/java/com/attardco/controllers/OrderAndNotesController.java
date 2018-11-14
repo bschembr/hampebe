@@ -15,6 +15,8 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,18 +31,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.attardco.entities.ClientsView;
 import com.attardco.entities.DeliveryNote;
 import com.attardco.entities.DeliveryOrder;
+import com.attardco.entities.EyeSelInvoiceView;
 import com.attardco.entities.ItemsView;
 import com.attardco.repositories.ClientsViewRepository;
 import com.attardco.repositories.DeliveryNoteRepository;
 import com.attardco.repositories.DeliveryOrderRepository;
+import com.attardco.repositories.EyeSelInvoiceRepository;
 import com.attardco.repositories.ItemsViewRepository;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@SuppressWarnings("deprecation")
 @RestController
 @RequestMapping("/api")
+@Transactional( propagation = Propagation.SUPPORTS, 
+				readOnly = true )
 @CrossOrigin(origins= { "http://localhost:4200", "http://acots" }, allowedHeaders="*")
 public class OrderAndNotesController {
 	
@@ -61,17 +66,26 @@ public class OrderAndNotesController {
 	}
 
 	@DeleteMapping("/delorder/{id}")
+	@Transactional(
+			propagation = Propagation.REQUIRED,
+			readOnly = false)
 	public boolean deleteDelOrder(@PathVariable Long id) {
 		deliveryOrderRepository.deleteById(id);
 		return true;
 	}
 
 	@PutMapping("/delorder")
+	@Transactional(
+			propagation = Propagation.REQUIRED,
+			readOnly = false)
 	public DeliveryOrder updateDelOrder(@RequestBody DeliveryOrder deliveryOrder) {
 		return deliveryOrderRepository.save(deliveryOrder);
 	}
 
 	@PostMapping("/delorder")
+	@Transactional(
+			propagation = Propagation.REQUIRED,
+			readOnly = false)
 	public DeliveryOrder createDelOrder(@RequestBody DeliveryOrder deliveryOrder) {
 		return deliveryOrderRepository.save(deliveryOrder);
 	}	
@@ -99,30 +113,45 @@ public class OrderAndNotesController {
 	}
 
 	@DeleteMapping("/delnote/{id}")
+	@Transactional(
+			propagation = Propagation.REQUIRED,
+			readOnly = false)
 	public boolean deleteDelNote(@PathVariable Long id) {
 		deliveryNoteRepository.deleteById(id);
 		return true;
 	}
 
 	@PutMapping("/delnote")
+	@Transactional(
+			propagation = Propagation.REQUIRED,
+			readOnly = false)
 	public DeliveryNote updateDelNote(@RequestBody DeliveryNote deliveryNote) {
 		return deliveryNoteRepository.save(deliveryNote);
 	}
 
 
 	@PostMapping("/delnote")
+	@Transactional(
+			propagation = Propagation.REQUIRED,
+			readOnly = false)
 	public DeliveryNote createDelNote(@RequestBody DeliveryNote deliveryNote) {
 		return deliveryNoteRepository.save(deliveryNote);
         
 	}
 
 	@PutMapping("/lockdelnote/{id}")
+	@Transactional(
+			propagation = Propagation.REQUIRED,
+			readOnly = false)
 	public Boolean lockDelNote(@PathVariable Long id) {
 		deliveryNoteRepository.lockDelNote(id);
 		return true;
 	}
 
 	@PutMapping("/unlockdelnote/{id}")
+	@Transactional(
+			propagation = Propagation.REQUIRED,
+			readOnly = false)
 	public Boolean unlockDelNote(@PathVariable Long id) {
 		deliveryNoteRepository.unlockDelNote(id);
 		return true;
@@ -156,4 +185,16 @@ public class OrderAndNotesController {
 		return clientViewRepository.listClients();
 	}
 
+	
+	// ---------------------------------------------
+	// OPERATIONS FOR EYESEL INVOICES
+	// ---------------------------------------------
+
+	@Autowired
+	private EyeSelInvoiceRepository eyeSelInvoiceRepository;
+	
+	@GetMapping("/invoice/{inv}")
+	public List<EyeSelInvoiceView> getEyeSelInvDet(@PathVariable Long inv){
+		return eyeSelInvoiceRepository.getEyeSelInvLines(inv);
+	}
 }

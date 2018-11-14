@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,7 +23,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "DeliveryNote")
 public class DeliveryNote {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)	
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="delnotes_seq")
+	@SequenceGenerator(
+	    name="delnotes_seq",
+	    sequenceName="delnotes_sequence",
+	    initialValue=18000000
+	)	
 	private long DelNoteRef;	
 	@ManyToOne
 	@JoinColumn(name="delOrderRef_id")

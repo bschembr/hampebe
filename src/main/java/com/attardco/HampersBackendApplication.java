@@ -1,15 +1,19 @@
 package com.attardco;
 
+import java.util.TimeZone;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 @SpringBootApplication
+@EnableTransactionManagement 
 public class HampersBackendApplication extends SpringBootServletInitializer {
 /*
 	@Bean
@@ -36,6 +40,7 @@ public class HampersBackendApplication extends SpringBootServletInitializer {
 	}
 
 	public static void main(String[] args) {
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 		SpringApplication sa = new SpringApplication(HampersBackendApplication.class);
 		sa.run(args);
 		// SpringApplication.run(HampersBackendApplication.class, args);
