@@ -1,39 +1,58 @@
 package com.attardco.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.SqlResultSetMapping;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 
-import org.hibernate.annotations.Immutable;
 
 @Entity
-@Immutable
-@Table(name = "view_eyeselInv")
+@SqlResultSetMapping(
+        name = "EyeSelInvoiceViewMapping",
+        entities = @EntityResult(
+                entityClass = EyeSelInvoiceView.class,
+                fields = {
+                    @FieldResult(name = "SYSREF", column = "SYSREF"),
+                    @FieldResult(name = "SalesOrder", column = "SalesOrder"),
+                    @FieldResult(name = "ClientCode", column = "ClientCode"),
+                    @FieldResult(name = "ItemCode", column = "ItemCode"),
+                    @FieldResult(name = "Qty", column = "Qty"),
+                    @FieldResult(name = "Display", column = "Display"),
+                    @FieldResult(name = "InvNum", column = "InvNum")}))
+
+@NamedNativeQuery(name = "getInvoiceDetails",
+		query = "SELECT SoD.SYSREF as SYSREF, SoD.HEADERSYSREF as SalesOrder, SoH.ACCOUNT as ClientCode, Inp.CODE as ItemCode, SoD.BASEQTY * -1 as Qty, SoD.DISPLAY as Display, SoH.REFERENCE as InvNum "
+				+ "from EyeSelServer.TEST_FOOD.dbo.SOPOSTHD SoH "
+				+ "inner join EyeSelServer.TEST_FOOD.dbo.SOPOSTDT SoD on SoH.SYSREF = SoD.HEADERSYSREF "
+				+ "inner join EyeSelServer.TEST_FOOD.dbo.INPROFIL InP on SoD.Profilesysref = InP.SYSREF "
+				+ "WHERE (SOh.REFERENCE = :invNum)",
+		resultClass = EyeSelInvoiceView.class )
+
+
 public class EyeSelInvoiceView {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "SYSREF", updatable = false, nullable = false)
-	private Long SYSREF;
-	private String SalesOrder;
+	private java.math.BigDecimal SYSREF;
+	private java.math.BigDecimal SalesOrder;
 	private String ClientCode;
 	private String ItemCode;
 	private Long Qty;
 	private String Display;
-	private String InvNum;
+	private java.math.BigDecimal InvNum;
 	
-	public Long getSYSREF() {
+	public EyeSelInvoiceView() {};
+	
+	public java.math.BigDecimal getSYSREF() {
 		return SYSREF;
 	}
-	public void setSYSREF(Long sYSREF) {
+	public void setSYSREF(java.math.BigDecimal sYSREF) {
 		SYSREF = sYSREF;
 	}
-	public String getSalesOrder() {
+	public java.math.BigDecimal getSalesOrder() {
 		return SalesOrder;
 	}
-	public void setSalesOrder(String salesOrder) {
+	public void setSalesOrder(java.math.BigDecimal salesOrder) {
 		SalesOrder = salesOrder;
 	}
 	public String getClientCode() {
@@ -60,10 +79,10 @@ public class EyeSelInvoiceView {
 	public void setDisplay(String display) {
 		Display = display;
 	}
-	public String getInvNum() {
+	public java.math.BigDecimal getInvNum() {
 		return InvNum;
 	}
-	public void setInvNum(String invNum) {
+	public void setInvNum(java.math.BigDecimal invNum) {
 		InvNum = invNum;
 	}
 
